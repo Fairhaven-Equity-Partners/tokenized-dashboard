@@ -9,6 +9,9 @@ import os
 import gspread
 from gspread_dataframe import set_with_dataframe
 
+if __name__ == "__main__":
+    main()
+
 # -------- Simple Auth --------
 USER_CREDENTIALS = {
     "admin@example.com": "securepassword123"
