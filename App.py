@@ -18,7 +18,7 @@ USER_CREDENTIALS = {
 }
 
 def simple_login():
-    st.sidebar.title("\U0001F510 Login")
+    st.sidebar.title("🔐 Login")
     email = st.sidebar.text_input("Email")
     password = st.sidebar.text_input("Password", type="password")
     if st.sidebar.button("Login"):
@@ -87,7 +87,7 @@ def fetch_xdc_balance(address):
 
 # -------- Crypto Exposure Tab --------
 def page_crypto_exposure():
-    st.title("\U0001F4B0 Crypto Exposure Dashboard")
+    st.title("💰 Crypto Exposure Dashboard")
 
     st.write("Enter wallet addresses for live balance fetch:")
     algo_wallet = st.text_input("Algorand Wallet Address", "")
@@ -147,4 +147,11 @@ def page_crypto_exposure():
             st.session_state["crypto_holdings"] = pd.concat([st.session_state["crypto_holdings"], crypto_props], ignore_index=True)
         st.success("Added to portfolio view!")
 
-# [Rest of the app continues unchanged...]
+# -------- Main Entry Point --------
+def main():
+    simple_login()
+    if st.session_state.get("authenticated"):
+        page_crypto_exposure()
+
+if __name__ == "__main__":
+    main()
