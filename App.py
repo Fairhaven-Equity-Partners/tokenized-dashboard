@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import os
 import gspread
 from gspread_dataframe import set_with_dataframe
+from google.oauth2.service_account import Credentials
 
 # -------- Simple Auth --------
 USER_CREDENTIALS = {
@@ -26,11 +27,12 @@ def simple_login():
         else:
             st.error("Invalid credentials.")
 
-# -------- Google Sheets Integration (Test Version) --------
+# -------- Google Sheets Integration (Streamlit Secrets-Based) --------
 def save_crypto_to_gsheet(email, df):
     try:
-        gc = gspread.service_account(filename="test_gspread_key.json")  # replace if local
-        sheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/1rBO2DUTqDqFXRoenXB1Tk0fxzbNHzXMHHwYBPIIOs-Q/edit?gid=0#gid=0")
+        creds = Credentials.from_service_account_info(st.secrets["gspread_service_account"])
+        gc = gspread.authorize(creds)
+        sheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/1rBO2DUTqDqFXRoenXB1Tk0fxzbNHzXMHHwYBPIIOs-Q")
         worksheet = sheet.worksheet("CryptoHoldings")
 
         df = df.copy()
